@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Shopping</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body class="bg-gray-600">
+    <nav>
+        <div class="nav-container">
+            <a href="index.html">
+                <img src="./image/logogame1.jpg" class="logonav">
+            </a>
+
+            
+              
+
+            <div class="navshop">
+                <p class="profile-name">Armshop</p>
+                <div onclick="openCart()" class="navshopcart">
+                    <i class="fa-solid fa-cart-plus" style="cursor: pointer;"></i>
+                     
+                    <div id="cartcount" class="numbercart" style="display: none;">
+                        0
+                    </div>           
+                </div>
+
+               <!--<div class="flex items-center justify-between ">
+                    <button onclick="handlesubmit()"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        type="button">
+                        Sign In
+                    </button>
+                </div>-->
+
+                <div class="flex items-center justify-between">
+                    <a href="index2.html" 
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Sign In
+                    </a>
+                </div>
+                
+            </div>
+                
+
+    
+        </div>
+
+
+    </nav>
+
+    <div class="menubar">
+        <div class="menu">
+            <ul class="text-violet-200 text-1xl">
+              <li>Yout Store</li>
+              <li>New & Noteworthy</li>
+              <li>Categories</li>
+              <li>Point Shop</li>
+              <li>New</li>
+              <li>Labs</li>
+            </ul>
+          </div>
+        <input onkeyup="searchsomething(this)" id="txt-search" type="text" class="search" placeholder="Search...">
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <a  class="mb-5 flex items-center justify-center font-bold text-white bg-slate-900 py-3 px-3.5 border-2 border-black rounded-lg text-black transition duration-500 text-lg ">
+                Categories
+            </a>
+            <a onclick="('All')" class="itemsidebar">
+                All
+            </a>
+
+            <a onclick="searchproduct('Free_To_Play')" class="itemsidebar">
+                Free To Play
+            </a>
+
+            <a onclick="searchproduct('Action')" class="itemsidebar">
+                Action
+            </a>
+
+            <a onclick="searchproduct('Adventure')" class="itemsidebar">
+                Adventure
+            </a>
+
+            <a onclick="searchproduct('RPG')" class="itemsidebar">
+                RPG
+            </a>
+
+            <a onclick="searchproduct('Early_Access')" class="itemsidebar">
+                Early Access
+            </a>
+        </div>
+
+        <div id="productlist" class="product">
+           
+ 
+        </div> 
+    </div>
+    
+    <div id="modalDesc" class="modal" style="display: none;">
+        <div onclick="closemodal()" class="modal-bg"></div>
+        <div class="modal-page">
+            <h2 class="text-2xl font-bold mb-3">Detail</h2>
+            <div class="modalesc-content">
+                <img id="mdd-img" class="modalesc-img" src="https://cdn.akamai.steamstatic.com/steam/apps/1517290/capsule_616x353.jpg?t=1710259254" alt="">
+                <div class="modalesc-detail">
+                    <p id="mdd-name" class="">Product name</p>
+                    <p id="mdd-price" class="text-2xl/[1.5vw]">500Thb</p><br>
+                    <p id="mdd-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa autem porro error asperiores cupiditate esse consectetur, voluptatibus amet consequatur commodi necessitatibus! Necessitatibus aliquam modi adipisci fuga deserunt exercitationem harum voluptatibus aut. Modi omnis praesentium mollitia quas natus labore numquam sunt placeat magnam consequuntur aperiam, voluptatum quasi hic eveniet atque alias.
+                    </p>
+                    <br>
+                    <div class="btn-control">
+                        <button onclick="closemodal()" class="btn">
+                            Close
+                        </button>
+                        <button onclick="addtocart()"  class="btn-cart">
+                            Add To Cart
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div id="modalCart" class="modal" style="display: none;" >
+        <div onclick="closemodal()" class="modal-bg"></div>
+        <div class="modal-page">
+            <h2 class="text-xl/[20px] font-bold">My Cart</h2>
+            <br>
+            <div id="mycart" class="cartlist">
+                <div class="cartlist-item">
+                    <div class="cart-left">
+                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/1517290/capsule_616x353.jpg?t=1710259254" alt="">
+                    <div class="cartlist-detail">
+                        <p>Product Name</p>
+                        <p>500THB</p>
+                    </div>
+                    </div>
+                    <div class="cart-right">
+                        <p class="btnc">-</p>
+                        <p class="mx-20">1</p>
+                        <p class="btnc">+</p>
+                    </div>
+                </div>
+
+                
+
+            </div>
+
+            
+            
+                
+
+          <div class="btn-control">
+            <button onclick="closemodal()" class="btn">
+                Cancel
+            </button>
+            <button class="btn-cart">
+                Buy
+            </button>
+          </div>
+
+          
+
+          
+
+          
+
+          
+        </div>
+    </div>
+    
+
+
+</body>
+
+</html>
